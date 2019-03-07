@@ -45,14 +45,6 @@ const (
 	// checks must be added first.
 	LinkerdPreInstallClusterChecks CategoryID = "pre-kubernetes-cluster-setup"
 
-	// LinkerdPreInstallSingleNamespaceChecks adds a check to validate that the
-	// control plane namespace already exists, and that the user can create
-	// namespace-scoped resources, including Role and RoleBinding. This check only
-	// runs as part of the set of pre-install checks.
-	// This check is dependent on the output of KubernetesAPIChecks, so those
-	// checks must be added first.
-	LinkerdPreInstallSingleNamespaceChecks CategoryID = "pre-kubernetes-single-namespace-setup"
-
 	// LinkerdPreInstallCapabilityChecks adds a check to validate the user has the
 	// capabilities necessary to deploy Linkerd. For example, the NET_ADMIN
 	// capability is required by the `linkerd-init` container to modify IP tables.
@@ -318,32 +310,6 @@ func (hc *HealthChecker) allCategories() []category {
 					hintAnchor:  "pre-k8s-cluster-k8s",
 					check: func(context.Context) error {
 						return hc.checkCanCreate("", "apiextensions.k8s.io", "v1beta1", "CustomResourceDefinition")
-					},
-				},
-			},
-		},
-		{
-			id: LinkerdPreInstallSingleNamespaceChecks,
-			checkers: []checker{
-				{
-					description: "control plane namespace exists",
-					hintAnchor:  "pre-single-ns",
-					check: func(ctx context.Context) error {
-						return hc.checkNamespace(ctx, hc.ControlPlaneNamespace, true)
-					},
-				},
-				{
-					description: "can create Roles",
-					hintAnchor:  "pre-k8s-cluster-k8s",
-					check: func(context.Context) error {
-						return hc.checkCanCreate(hc.ControlPlaneNamespace, "rbac.authorization.k8s.io", "v1beta1", "Role")
-					},
-				},
-				{
-					description: "can create RoleBindings",
-					hintAnchor:  "pre-k8s-cluster-k8s",
-					check: func(context.Context) error {
-						return hc.checkCanCreate(hc.ControlPlaneNamespace, "rbac.authorization.k8s.io", "v1beta1", "RoleBinding")
 					},
 				},
 			},
