@@ -224,7 +224,9 @@ var (
 	// proxy configurations
 	ProxyConfigAnnotations = []string{
 		ProxyImageAnnotation,
+		ProxyImagePullPolicyAnnotation,
 		ProxyInitImageAnnotation,
+		ProxyInitImagePullPolicyAnnotation,
 		ProxyControlPortAnnotation,
 		ProxyIgnoreInboundPortsAnnotation,
 		ProxyIgnoreOutboundPortsAnnotation,
