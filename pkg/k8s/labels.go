@@ -220,7 +220,7 @@ var (
 	// MountPathProxyConfig is the path at which the global config file is mounted
 	MountPathProxyConfig = MountPathBase + "/config/proxy"
 
-	// ConfigAnnotations is the list of annotations that can be used to override
+	// ProxyConfigAnnotations is the list of annotations that can be used to override
 	// proxy configurations
 	ProxyConfigAnnotations = []string{
 		ProxyImageAnnotation,
